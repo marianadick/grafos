@@ -1,14 +1,5 @@
-class Vertice:
-    def __init__(self, rotulo):
-        self.rotulo = rotulo
-        self.vizinhos = []
-        self.grau = 0
-
-class Aresta:
-    def __init__(self, a, b, peso):
-        self.a = a
-        self.b = b
-        self.peso = peso
+from Vertice import Vertice
+from Aresta import Aresta
 
 class Grafo:
     def __init__(self):
@@ -47,7 +38,7 @@ class Grafo:
             if (linha == ''):
                 continue
 
-            if ("*vertices" in linha):
+            elif ("*vertices" in linha):
                 continue
 
             elif ("*edges" in linha):
