@@ -1,10 +1,11 @@
 from Vertice import Vertice
 from Aresta import Aresta
 
+''' As buscas são realizadas através dos indices. '''
 class Grafo:
     def __init__(self):
-        self.vertices = {}
-        self.arestas = {}
+        self.vertices = {} #{index: objeto Vertice}
+        self.arestas = {} #{(indice a, indice b): objeto Aresta}
 
     def qtd_vertices(self):  
         return len(self.vertices.keys())
@@ -12,23 +13,27 @@ class Grafo:
     def qtd_arestas(self):
         return len(self.arestas.keys())
 
-    def grau(self, index):
-        return self.vertices[index].grau
+    def grau(self, v):
+        return self.vertices[v].grau
 
-    def rotulo(self, index):
-        return self.vertices[index].rotulo
+    def rotulo(self, v):
+        return self.vertices[v].rotulo
 
-    def vizinhos(self, index):
-        return self.vertices[index].vizinhos
+    def vizinhos(self, v):
+        return self.vertices[v].vizinhos
 
-    def ha_aresta(self, a, b):
-        if (self.arestas[a, b]):
+    def ha_aresta(self, u, v):
+        if ((u, v) in self.arestas or (v, u) in self.arestas):
             return True
         return False
     
-    def peso(self, a, b):
-        return self.arestas[a, b]
-        
+    def peso(self, u, v):
+        if (u, v) in self.arestas:
+            return self.arestas[u, v].peso
+        elif (v, u) in self.arestas:
+            return self.arestas[v, u].peso
+        else:
+            return 'Não há aresta'
 
     def ler_arquivo(self, arquivo):   
         ref_arquivo = open(arquivo, 'r').read().split('\n')
@@ -48,10 +53,11 @@ class Grafo:
             elif (not lendo_arestas):
                 val = linha.split(' ')
 
-                index = int(val[0])
+                indice = int(val[0])
                 rotulo = val[1]
-                vertice = Vertice(rotulo)
-                self.vertices[index] = vertice
+
+                vertice = Vertice(indice, rotulo)
+                self.vertices[indice] = vertice
 
             else:
                 val = linha.split(' ')
@@ -59,9 +65,10 @@ class Grafo:
                 a = self.vertices[int(val[0])]
                 b = self.vertices[int(val[1])]
                 peso = float(val[2])
-                aresta = Aresta(a, b, peso)
 
-                self.arestas[a, b] = aresta
+                aresta = Aresta(a, b, peso)
+                self.arestas[a.indice, b.indice] = aresta
+                
                 a.vizinhos.append(b)
                 a.grau += 1
                 b.vizinhos.append(a)
