@@ -6,7 +6,6 @@ from collections import defaultdict
 class Buscas():
     def __init__(self, grafo: Grafo, indice_vertice: int):
         self.grafo = grafo
-        # objeto vertice_s?
         self.vertice_s = self.grafo.vertices[indice_vertice]
 
     def run(self):
@@ -34,7 +33,6 @@ class Buscas():
         fila.put(self.vertice_s)  # Enqueue
 
         # Propagação das visitas
-        i = 0
         while fila.empty() == False:
             u = fila.get()  # Dequeue -> retorna um vértice
             for v in u.vizinhos:
