@@ -72,6 +72,7 @@ def Programa():
         indice_vertice = int(indice_vertice)
     except:
         print('Erro no índice do vértice.')
+        exit(-1)
 
     if grafo.qtd_vertices() >= indice_vertice > 0:
         Buscas(grafo, indice_vertice).run()
