@@ -74,5 +74,5 @@ class Grafo:
                 b.vizinhos.append(a)
                 b.grau += 1
 
-grafo = Grafo()
-grafo.ler_arquivo('cor3.net')
+#grafo = Grafo()
+#grafo.ler_arquivo('cor3.net')
