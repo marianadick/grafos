@@ -1,17 +1,17 @@
 from Grafo import Grafo
 
 
-class Questao4:
+class  Dijkstra:
 
     def __init__(self, grafo: Grafo, indice_vertice: int) -> None:
         self.grafo = grafo
         self.vertice_s = self.grafo.vertices[indice_vertice]
 
     def run(self):
-        d, a = self.dijkstra()
+        d, a = self.calculate_minimal_paths()
         self.print_saida(d, a)
 
-    def dijkstra(self):
+    def calculate_minimal_paths(self):
         visitados = {}  # vértices visitados
         distancias = {}  # distâncias até encontrar cada vertice
         antecessores = {}  # antecessores aos vértices
@@ -35,6 +35,7 @@ class Questao4:
                 if visitados[x.indice] == False:
                     aresta = None
                     for y in self.grafo.arestas.keys():
+                        # Por ser um grafo nao-dirigido devemos testar aresta (a, b) e aresta (b, a)
                         if y == (vertice_atual.indice, x.indice):
                             aresta = self.grafo.arestas[(vertice_atual.indice, x.indice)]
                             break
