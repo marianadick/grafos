@@ -3,6 +3,7 @@ from Grafo import Grafo
 
 class  Dijkstra:
 
+
     def __init__(self, grafo: Grafo, indice_vertice: int) -> None:
         self.grafo = grafo
         self.vertice_s = self.grafo.vertices[indice_vertice]
@@ -86,7 +87,7 @@ def Programa():
         exit(-1)
 
     if grafo.qtd_vertices() >= indice_vertice > 0:
-        Questao4(grafo, indice_vertice).run()
+        Dijkstra(grafo, indice_vertice).run()
     else:
         print(
             f'Vértice inválido. Número deve ser de 1 a {grafo.qtd_vertices()}.')
