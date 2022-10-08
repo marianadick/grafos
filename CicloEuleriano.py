@@ -53,8 +53,6 @@ class CicloEuleriano:
         vertices_no_ciclo = [self.grafo.vertices[x] for x in ciclo]
         vizinhos_abertos = []
 
-        
-
         for x in vertices_no_ciclo:
             for y in x.vizinhos:
                 if (x.indice, y.indice) in C:
