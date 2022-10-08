@@ -34,7 +34,7 @@ class FloydWarshall():
                     d[u][v] = min(d[u][v], d[u][k] + d[k][v])
         return d
 
-    def print_saida(self, d: list):
+    def print_saida(self, d: dict):
         numV = self.grafo.qtd_vertices()
         for vertice in range(1, numV + 1):
             aux = []
