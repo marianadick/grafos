@@ -80,5 +80,3 @@ def Programa():
         print(
             f'Vértice inválido. Número deve ser de 1 a {grafo.qtd_vertices()}.')
 
-
-Programa()

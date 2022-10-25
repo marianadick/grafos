@@ -1,7 +1,7 @@
 from Grafo import Grafo
 
 class GrafoDirigido(Grafo):
-    def __init__(self, vertices, conexoes):
+    def __init__(self, vertices={}, conexoes={}):
         super().__init__(vertices, conexoes) # Conexoes = arcos
 
     def ha_conexao(self, u, v):
