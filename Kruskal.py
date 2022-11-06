@@ -37,17 +37,11 @@ class Kruskal():
         print(f'{a[len(a)-1][0]}-{a[len(a)-1][1]}')
 
 
-def Programa():
-    nome_do_arquivo = input()
+def Programa(): 
     grafo = Grafo()
+    grafo.ler_arquivo('./testes/agm_tiny.net')
 
-    try:
-        grafo.ler_arquivo(nome_do_arquivo)
-    except:
-        print('Erro com nome de arquivo.')
-        exit(-1)
-
-    Kruskal(grafo).run()
-
+    kruskal = Kruskal(grafo)
+    kruskal.run()
 
 Programa()
