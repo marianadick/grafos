@@ -93,7 +93,7 @@ class ComponentesFortementeConexas:
         
 def Programa(): 
     grafo = GrafoDirigido()
-    grafo.ler_arquivo('cfc.net')
+    grafo.ler_arquivo('testes/cfc.net')
 
     cfc = ComponentesFortementeConexas(grafo)
     cfc.run()
