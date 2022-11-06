@@ -10,14 +10,10 @@ class ComponentesFortementeConexas:
         self.componentes = []
 
     def run(self):
-        F, A = self.DFS()
+        F = self.DFS()
         self.grafo.transposicao()
-        _, _, _, Ad = self.DFS_adaptado(F)
-        print(Ad)
-        for k, v in Ad.items():
-            if v == None:
-                self.componentes.append(self.encontrar_componentes(k,Ad))
-        self.print_saida()
+        At = self.DFS_adaptado(F)
+        self.print_saida(At)
 
     def DFS(self):
         visitados = {}
@@ -37,7 +33,7 @@ class ComponentesFortementeConexas:
             if visitados[u] == False:
                 self.DFS_visit(u, visitados, tempo_inicial, tempo_final, antecessores, tempo)
         
-        return tempo_final, antecessores
+        return tempo_final
 
     def DFS_adaptado(self, F):
         visitados = {}
@@ -52,20 +48,15 @@ class ComponentesFortementeConexas:
             antecessores[v] = None
 
         tempo = 0
-        F_ord = dict(sorted(F.items(), key=lambda item: item[1], reverse=True))
-        vertices = []
-        print(F_ord)
         
-        for key in F_ord.keys():
-            vertices.append(key)
+        F_ord = dict(sorted(F.items(), key=lambda item: item[0], reverse=True))
+        vertices = list(F_ord.keys())
            
         for v in vertices:
             if visitados[v] == False:
                 self.DFS_visit(v, visitados, tempo_inicial, tempo_final, antecessores, tempo)
         
-        return visitados, tempo_inicial, tempo_final, antecessores 
-        
-
+        return antecessores 
         
     def DFS_visit(self, v, visitados, tempo_inicial, tempo_final, antecessores, tempo):
         visitados[v] = True
@@ -80,23 +71,26 @@ class ComponentesFortementeConexas:
         
         tempo += 1
         tempo_final[v] = tempo
-    
-    def encontrar_componentes(self, r, antecessores):
-        aux = []
-        for k, v in antecessores.items():
-            if v == r:
+
+    def print_saida(self, At):
+        for k, v in At.items():
+            if v == None:
+                aux = []
                 aux.append(k)
-            elif v in aux:
-                aux.append(k)     
-        return aux   
-            
-
-
-    def print_saida(self):
+                aux.extend(self.print_recursiva(k, At, []))
+                self.componentes.append(aux)
+                
         for componente in self.componentes:
             print(', '.join(map(str, componente)))
 
-
+                
+    def print_recursiva(self, k, At, lista):
+        for i, v in At.items():
+            if k == v:
+                lista.append(i)
+                self.print_recursiva(i, At, lista)
+        return lista                
+        
 def Programa(): 
     grafo = GrafoDirigido()
     grafo.ler_arquivo('cfc.net')
