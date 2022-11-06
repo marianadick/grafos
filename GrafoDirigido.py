@@ -14,3 +14,9 @@ class GrafoDirigido(Grafo):
             return self.conexoes[u, v].peso
         else:
             return 'Não há arco'
+
+    def transposicao(self):
+        for v in self.vertices.values():
+            aux = v.vizinhos_saintes
+            v.vizinhos_saintes = v.vizinhos_entrantes
+            v.vizinhos_entrantes = aux
