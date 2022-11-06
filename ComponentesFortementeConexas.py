@@ -72,10 +72,12 @@ class ComponentesFortementeConexas:
         tempo += 1
         tempo_inicial[v] = tempo
         obj_v = self.grafo.vertices[v]
+        
         for u in obj_v.vizinhos_saintes:
             if visitados[u.indice] == False:
                 antecessores[u.indice] = v
                 self.DFS_visit(u.indice, visitados, tempo_inicial, tempo_final, antecessores, tempo)
+        
         tempo += 1
         tempo_final[v] = tempo
     
