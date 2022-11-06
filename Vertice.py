@@ -3,6 +3,6 @@ class Vertice:
         self.indice = indice
         self.rotulo = rotulo
         self.vizinhos = []  # Lista de objetos vertice
-        self.vizinhos_entrantes = []  # (u, self)
-        self.vizinhos_saintes = []  # (self, u)
+        self.vizinhos_entrantes = []  
+        self.vizinhos_saintes = [] 
         self.grau = 0
