@@ -2,12 +2,14 @@ from Vertice import Vertice
 from Conexao import Conexao
 
 ''' As buscas são realizadas através dos indices. '''
+
+
 class Grafo:
     def __init__(self, vertices={}, conexoes={}):
-        self.vertices = vertices #{index: objeto Vertice}
-        self.conexoes = conexoes #{(indice a, indice b): objeto Conexao}
+        self.vertices = vertices  # {index: objeto Vertice}
+        self.conexoes = conexoes  # {(indice a, indice b): objeto Conexao}
 
-    def qtd_vertices(self):  
+    def qtd_vertices(self):
         return len(self.vertices.keys())
 
     def qtd_conexoes(self):
@@ -26,7 +28,7 @@ class Grafo:
         if ((u, v) in self.conexoes or (v, u) in self.conexoes):
             return True
         return False
-    
+
     def peso(self, u, v):
         if ((u, v) in self.conexoes):
             return self.conexoes[u, v].peso
@@ -35,10 +37,10 @@ class Grafo:
         else:
             return 'Não há aresta'
 
-    def ler_arquivo(self, arquivo):   
+    def ler_arquivo(self, arquivo):
         ref_arquivo = open(arquivo, 'r').read().split('\n')
         lendo_conexoes = False
-        
+
         for linha in ref_arquivo:
             if (linha == ''):
                 continue
@@ -54,7 +56,15 @@ class Grafo:
                 val = linha.split(' ')
 
                 indice = int(val[0])
-                rotulo = val[1]
+
+                if '"' in val[1]:
+                    last_word = len(val) - 1
+                    val[1] = val[1].replace('"', '')
+                    val[last_word] = val[last_word].replace('"', '')
+                    rotulo = ' '.join(val[1:last_word+1])
+
+                else:
+                    rotulo = val[1]
 
                 vertice = Vertice(indice, rotulo)
                 self.vertices[indice] = vertice
@@ -68,8 +78,12 @@ class Grafo:
 
                 conexao = Conexao(a, b, peso)
                 self.conexoes[a.indice, b.indice] = conexao
-                
+
                 a.vizinhos.append(b)
                 a.grau += 1
                 b.vizinhos.append(a)
                 b.grau += 1
+
+                # Importante para dirigidos
+                a.vizinhos_saintes.append(b)
+                b.vizinhos_entrantes.append(a)
