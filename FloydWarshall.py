@@ -18,7 +18,7 @@ class FloydWarshall():
             for v in range(1, numV+1):
                 if u == v:
                     linha[v] = 0
-                elif self.grafo.ha_aresta(u, v):
+                elif self.grafo.ha_conexao(u, v):
                     linha[v] = self.grafo.peso(u, v)
                 else:
                     linha[v] = float('inf')

@@ -3,7 +3,6 @@ from Grafo import Grafo
 
 class CicloEuleriano:
 
-
     def __init__(self, grafo: Grafo) -> None:
         self.grafo = grafo
 
@@ -14,16 +13,16 @@ class CicloEuleriano:
     def hierholzer(self):
         C = {}  # Arestas visitadas
         vertices = list(self.grafo.vertices.values())
-        arestas = list(self.grafo.arestas.values())
+        arestas = list(self.grafo.conexoes.values())
 
         for x in arestas:
             C[(x.a.indice, x.b.indice)] = False
 
         v = vertices[0].indice
-        r, ciclo = self.buscarSubcicloEuleriano(v, C)    
+        r, ciclo = self.buscarSubcicloEuleriano(v, C)
         if r == False:
             return False, None
-        
+
         else:
             if False in C.values():
                 return False, None
@@ -33,13 +32,14 @@ class CicloEuleriano:
     def buscarSubcicloEuleriano(self, v, C):
         ciclo = [v]
         t = v
-        
+
         while True:
 
             if not False in C.values():
                 return False, None
             else:
-                nao_visitados = [k for k, i in C.items() if i == False and (k[0]==v or k[1]==v)]
+                nao_visitados = [k for k, i in C.items(
+                ) if i == False and (k[0] == v or k[1] == v)]
                 usado = v
                 v = nao_visitados[0][0]
                 u = nao_visitados[0][1]

@@ -1,8 +1,7 @@
 from Grafo import Grafo
 
 
-class  Dijkstra:
-
+class Dijkstra:
 
     def __init__(self, grafo: Grafo, indice_vertice: int) -> None:
         self.grafo = grafo
@@ -27,21 +26,25 @@ class  Dijkstra:
         antecessores[self.vertice_s.indice] = self.vertice_s.indice
 
         while False in visitados.values():
-            nao_visitados = {k: distancias[k] for k, v in visitados.items() if v == False}
+            nao_visitados = {k: distancias[k]
+                             for k, v in visitados.items() if v == False}
             menor_valor = min(nao_visitados.values())
             key = [k for k, v in nao_visitados.items() if v == menor_valor][0]
-            vertice_atual = [v for k, v in self.grafo.vertices.items() if v.indice == key][0]
+            vertice_atual = [
+                v for k, v in self.grafo.vertices.items() if v.indice == key][0]
             visitados[key] = True
             for x in vertice_atual.vizinhos:
                 if visitados[x.indice] == False:
                     aresta = None
-                    for y in self.grafo.arestas.keys():
+                    for y in self.grafo.conexoes.keys():
                         # Por ser um grafo nao-dirigido devemos testar aresta (a, b) e aresta (b, a)
                         if y == (vertice_atual.indice, x.indice):
-                            aresta = self.grafo.arestas[(vertice_atual.indice, x.indice)]
+                            aresta = self.grafo.conexoes[(
+                                vertice_atual.indice, x.indice)]
                             break
                         elif y == (x.indice, vertice_atual.indice):
-                            aresta = self.grafo.arestas[(x.indice, vertice_atual.indice)]
+                            aresta = self.grafo.conexoes[(
+                                x.indice, vertice_atual.indice)]
                             break
                     if distancias[x.indice] > (distancias[key] + aresta.peso):
                         distancias[x.indice] = (distancias[key] + aresta.peso)
@@ -55,7 +58,7 @@ class  Dijkstra:
         for i in caminho.keys():
             list_str = str(caminho[i]).replace(
                 ' ', '').replace('[', '').replace(']', '')
-            print(f'{i}: {list_str}; d={d[i]}')    
+            print(f'{i}: {list_str}; d={d[i]}')
 
     def return_path(self, a):
         caminhos = {}
@@ -67,8 +70,9 @@ class  Dijkstra:
                 if antecessor == self.vertice_s.indice:
                     break
                 caminhos[k].insert(0, a[antecessor])
-        
+
         return caminhos
+
 
 def Programa():
     nome_do_arquivo, indice_vertice = input().split()
