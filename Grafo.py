@@ -9,6 +9,9 @@ class Grafo:
         self.vertices = vertices  # {index: objeto Vertice}
         self.conexoes = conexoes  # {(indice a, indice b): objeto Conexao}
 
+    def get_lista_vertices(self):
+        return list(self.vertices.values())
+    
     def qtd_vertices(self):
         return len(self.vertices.keys())
 

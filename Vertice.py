@@ -6,3 +6,6 @@ class Vertice:
         self.vizinhos_entrantes = []  # (u, self)
         self.vizinhos_saintes = []  # (self, u)
         self.grau = 0
+        # Utilizado no algoritmo de coloração
+        self.hasCor = False
+        self.cor = None
