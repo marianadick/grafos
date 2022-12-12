@@ -1,12 +1,12 @@
 from queue import Queue
-from Grafo import Grafo
+from GrafoDirigido import GrafoDirigido
 from collections import defaultdict
 
 
 class Buscas():
-    def __init__(self, grafo: Grafo, indice_vertice: int):
+    def __init__(self, grafo: GrafoDirigido):
         self.grafo = grafo
-        self.vertice_s = self.grafo.vertices[indice_vertice]
+        self.vertice_s = self.grafo.vertices[1]
 
     def run(self):
         d, _ = self.busca_em_largura()
@@ -60,7 +60,7 @@ class Buscas():
 
 def Programa():
     nome_do_arquivo, indice_vertice = input().split()
-    grafo = Grafo()
+    grafo = GrafoDirigido()
 
     try:
         grafo.ler_arquivo(nome_do_arquivo)
