@@ -1,6 +1,7 @@
 from queue import Queue
 
 from Grafo import Grafo
+from Vertice import Vertice
 
 
 class HopCroftKarp:
@@ -10,6 +11,7 @@ class HopCroftKarp:
         self.x = []
         self.y = []
         self.encontra_conjuntos()  # testado funcionando
+        self.null = Vertice('null', 'null')
 
     def encontra_conjuntos(self):
         '''Verifica bipartição do gráfico e separa os conjuntos, pois o algoritmo é para grafos bipartidos.'''
@@ -43,7 +45,7 @@ class HopCroftKarp:
         q = Queue()
 
         for x in self.x:
-            if mates[x.indice] == None:
+            if mates[x.indice] == self.null:
                 D[x.indice] = 0
                 q.put(x)
             else:
@@ -55,46 +57,34 @@ class HopCroftKarp:
             x = q.get()
             if D[x.indice] < D['null']:
                 for y in x.vizinhos:
-                    if mates[y.indice] == None:
-                        if D['null'] == float('inf'):
-                            D['null'] = D[x.indice] + 1
-                    elif D[mates[y.indice].indice] == float('inf'):
+                    if D[mates[y.indice].indice] == float('inf'):
                         D[mates[y.indice].indice] = D[x.indice] + 1
                         q.put(mates[y.indice])
 
         return D['null'] != float('inf')
 
     def dfs(self, mates: list, x, D: list):
-
-        if x != None:
+        if x != self.null:
             for y in x.vizinhos:
-                if mates[y.indice] == None:
-                    if D['null'] == (D[x.indice] + 1):
-                        if self.dfs(mates, mates[y.indice], D):
-                            # mates[y.indice] = x
-                            mates[x.indice] = y
-                            return True
-
-                elif D[mates[y.indice]] == (D[x.indice] + 1):
+                if D[mates[y.indice].indice] == (D[x.indice] + 1):
                     if self.dfs(mates, mates[y.indice], D):
                         mates[y.indice] = x
                         mates[x.indice] = y
                         return True
-                # else?
-        D[x] = float('inf')
-        return False
+            D[x] = float('inf')
+            return False
+        return True
 
     def run(self):
         D = {}
-        mates = {}  # É pra ser um dict de vários mate = vertice
+        mates = {}
         for i in range(1, self.grafo.qtd_vertices() + 1):
             D[i] = float('inf')
-            mates[i] = None
-
+            mates[i] = self.null
         m = 0  # tamanho do emparelhamento
         while self.bfs(mates, D) == True:
             for x in self.x:
-                if mates[x.indice] == None:
+                if mates[x.indice] == self.null:
                     if self.dfs(mates, x, D) == True:
                         m += 1
 
@@ -102,9 +92,15 @@ class HopCroftKarp:
 
     def print_saida(self, m, mates):
         print(f'Emparelhamento máximo: {m}')
+        list_str = []
         for k, v in mates.items():
             if v != None:
-                print(f'{k} <-> {v.indice}')
+                do_x = v.indice if v in self.x else k
+                do_y = v.indice if v not in self.x else k
+                list_str.append(f'{do_x} <-> {do_y}')
+        list_str = list(dict.fromkeys(list_str))
+        for stri in list_str:
+            print(stri)
 
 
 def Programa():
